@@ -3,7 +3,7 @@ let thugAPI = {
     "onInit": function () {},
     "frame": document.getElementById("webclient")?.contentWindow || window,
     "init": function () {
-        thugAPI.reactStore = Object.values(thugAPI.frame.document.querySelector("#root"))[0].memoizedState.element.props.store;
+        thugAPI.getState = () => Object.values(thugAPI.frame.document.querySelector("#root"))[0].memoizedState.element.props.store.getState();
         thugAPI.frame.webpackChunkwebclient.push([[Symbol()], {}, function (require) {
             thugAPI.frame.Object.prototype.__defineGetter__(Symbol.for("cache"), function() {
                 require.c = this;
@@ -34,9 +34,9 @@ function changeUsername (username) {
     thugAPI.sendSocketMessage({
         "evt": thugAPI.packets.WS_CONF_RENAME_REQ,
         "body": {
-            id: thugAPI.reactStore.getState().meeting.currentUser.userId,
+            id: thugAPI.getState().meeting.currentUser.userId,
             dn2: btoa(username),
-            olddn2: btoa(thugAPI.reactStore.getState().meeting.currentUser.displayName)
+            olddn2: btoa(thugAPI.getState().meeting.currentUser.displayName)
         }
     })();
 };
@@ -48,7 +48,7 @@ function unmute () {
             "add": null,
             "remove": null,
             "update": [{
-                    "id": thugAPI.reactStore.getState().meeting.currentUser.userId,
+                    "id": thugAPI.getState().meeting.currentUser.userId,
                     "muted": false
                 }]
          }
@@ -57,7 +57,7 @@ function unmute () {
     thugAPI.sendSocketMessage({
             "evt": thugAPI.packets.WS_AUDIO_MUTE_REQ,
             "body": {
-                "id": thugAPI.reactStore.getState().meeting.currentUser.userId,
+                "id": thugAPI.getState().meeting.currentUser.userId,
                 "bMute": false
             }
     })();
@@ -67,7 +67,7 @@ function turnOnVideo () {
     thugAPI.sendSocketMessage({
         evt: thugAPI.packets.WS_VIDEO_MUTE_VIDEO_REQ,
         body: {
-            id: thugAPI.reactStore.getState().meeting.currentUser.userId,
+            id: thugAPI.getState().meeting.currentUser.userId,
             bOn: false
         }
     })(()=>{});
@@ -191,7 +191,7 @@ let autoUnmuteButton = addButton("Enable Auto Unmute", () => {
         autoUnmuteButton.innerHTML = "Disable Auto Unmute"
 
         autoUnmuteInterval = setInterval(function () {
-            if (thugAPI.reactStore.getState().meeting.currentUser.muted) {
+            if (thugAPI.getState().meeting.currentUser.muted) {
                 unmute();
             }
         }, 10);
@@ -208,7 +208,7 @@ let autoStartVideoButton = addButton("Enable Auto Start Video", () => {
         autoStartVideoButton.innerHTML = "Disable Auto Start Video"
 
         autoStartVideoInterval = setInterval(function () {
-            if (!thugAPI.reactStore.getState().meeting.currentUser.bVideoOn) {
+            if (!thugAPI.getState().meeting.currentUser.bVideoOn) {
                 turnOnVideo();
             }
         }, 10);
