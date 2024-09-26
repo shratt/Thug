@@ -1,2 +1,3 @@
 # Thug
-Thug - WIP Utility for trolling
+Thug - WIP Zoom Utility for trolling <br>
+atm only spam changes username when injected
