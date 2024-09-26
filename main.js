@@ -50,45 +50,93 @@ menu.style.position = 'fixed';
 menu.style.top = "0%";
 menu.style.right = "0%";
 menu.style.zIndex = '99999';
-menu.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+menu.style.backgroundColor = 'rgba(36, 36, 36, 0.9)';
 menu.style.color = "white";
 menu.style.backdropFilter = 'blur(4px)';
-menu.style.border = "1px solid rgba(255, 255, 255, 0.8)";
+menu.style.boxShadow = "0 8px 24px #0000004d";
 menu.style.padding = '15px';
-menu.style.borderRadius = '4px';
+menu.style.borderRadius = '0px 0px 0px 8px';
 menu.style.width = '350px';
+menu.style.height = "40%";
 
 menu.innerHTML = `
-    <h1 style="margin: 0;">Thug</h1>
+    <h1 style="font-size: 35px; font-weight: bold; margin: 0;">Thuggary <span style="font-size: 15px;">v0.1</span> </h1>
     <hr>
-    <h3 style="margin: 0;">Name Changer</h3>
-    <div style="margin: 10px 0;">
-        <label for="scale">Delay: <span id="delayValue">200</span> ms</label><br>
-        <input type="range" min="1" max="1000" value="200" class="slider" id="scale">
-        <button id="start" style="background-color: #ff5722; color: white; border: none; border-radius: 4px;">Apply</button>
-        <button id="stop" style="background-color: #ff5722; color: white; border: none; border-radius: 4px;">Stop</button>
-    </div>
-`
+    <h3 style="margin: 10;">Name Spammer <span style="font-size: 15px;" id="delayValue">200ms</span></h3>
+`;
+
+function addButton (name, callback) {
+    let button = document.createElement('button');
+    button.innerHTML = name;
+    button.style.padding = '2px 15px';
+    button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
+    button.style.width = "100%";
+    button.style.height = "10%";
+    button.style.color = 'white';
+    button.style.border = 'none';
+    button.style.borderRadius = '5px';
+    button.style.cursor = 'pointer';
+    button.style.fontSize = '14px';
+    button.style.transition = 'background-color 0.3s, transform 0.3s';
+    button.addEventListener('mouseover', () => {
+        button.style.backgroundColor = 'rgba(75, 75, 75, 1)';
+    });
+    button.addEventListener('mouseout', () => {
+        button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
+    });
+    button.addEventListener('click', callback);
+    menu.appendChild(button);
+    return button;
+}
+
+function addSlider (min, max, value, callback) {
+    let sliderInput = document.createElement('input');
+    sliderInput.type = 'range';
+    sliderInput.min = min;
+    sliderInput.max = max;
+    sliderInput.value = value;
+    sliderInput.style.flexGrow = '1';
+    sliderInput.style.height = '5%';
+    sliderInput.style.width = '100%';
+    sliderInput.style.marginBottom = '5px';
+    sliderInput.style.appearance = 'none';
+    sliderInput.style.background = 'transparent';
+    sliderInput.style.border = 'none';
+    sliderInput.style.cursor = 'pointer';
+    sliderInput.style.borderRadius = '5px';
+    sliderInput.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+    sliderInput.style.transition = 'background-color 0.3s ease';
+    menu.appendChild(sliderInput);
+
+    sliderInput.addEventListener('input', callback);
+    
+    return sliderInput;
+}
+
+addSlider("0", "1000", "100", function() {
+    document.getElementById('delayValue').innerHTML = this.value + "ms";
+    nameSpammerDelay = this.value;
+})
+
+addButton("start", () => {
+    if (this.innerHTML == "start") {
+        this.innerHTML = "stop"
+
+        if (nameSpammerInterval) {
+            clearInterval(nameSpammerInterval);
+        }
+
+        nameSpammerInterval = setInterval(() => {
+            changeUsername(Math.random().toString(36).substring(2,7))
+        }, parseInt(nameSpammerDelay));
+
+    } else {
+        this.innerHTML = "start"
+
+        if (nameSpammerInterval) {
+            clearInterval(nameSpammerInterval);
+        }
+    }
+});
 
 document.body.appendChild(menu);
-
-document.getElementById('scale').addEventListener('input', (event) => {
-    const delayValue = document.getElementById('delayValue');
-    delayValue.textContent = event.target.value;
-    nameSpammerDelay = event.target.value;
-});
-
-document.getElementById('start').addEventListener("click", () => {
-    if (nameSpammerInterval) {
-        clearInterval(nameSpammerInterval);
-    }
-    nameSpammerInterval = setInterval(() => {
-        changeUsername(Math.random().toString(36).substring(2,7))
-    }, nameSpammerDelay);
-});
-
-document.getElementById('stop').addEventListener("click", () => {
-    if (nameSpammerInterval) {
-        clearInterval(nameSpammerInterval);
-    }
-});
