@@ -63,6 +63,25 @@ function unmute () {
     })();
 };
 
+function turnOnVideo () {
+    thugAPI.sendSocketMessage({
+        evt: thugAPI.packets.WS_VIDEO_MUTE_VIDEO_REQ,
+        body: {
+            id: thugAPI.reactStore.getState().meeting.currentUser.userId,
+            bOn: false
+        }
+    })(()=>{});
+    thugAPI.sendSocketMessage({
+        evt: thugAPI.packets.WS_CONF_FAR_END_CAMERA_CONTROL_CAP_REQ,
+        body: {
+            "pan": false,
+            "tilt": false,
+            "zoom": false,
+            "focus": false
+        }
+    })();
+};
+
 
 thugAPI.init();
 
@@ -93,6 +112,7 @@ function addButton (name, callback) {
     let button = document.createElement('button');
     button.innerHTML = name;
     button.style.padding = '2px 15px';
+    button.style.marginTop = "5px";
     button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
     button.style.width = "100%";
     button.style.height = "10%";
@@ -166,7 +186,6 @@ let nameSpammerButton = addButton("start", () => {
 menu.appendChild(document.createElement("hr"));
 
 let autoUnmuteInterval;
-
 let autoUnmuteButton = addButton("Enable Auto Unmute", () => {
     if (autoUnmuteButton.innerHTML == "Enable Auto Unmute") {
         autoUnmuteButton.innerHTML = "Disable Auto Unmute"
@@ -180,6 +199,23 @@ let autoUnmuteButton = addButton("Enable Auto Unmute", () => {
     } else {
         autoUnmuteButton.innerHTML = "Enable Auto Unmute"
         clearInterval(autoUnmuteInterval);
+    }
+});
+
+let autoStartVideoInterval;
+let autoStartVideoButton = addButton("Enable Auto Start Video", () => {
+    if (autoStartVideoButton.innerHTML == "Enable Auto Start Video") {
+        autoStartVideoButton.innerHTML = "Disable Auto Start Video"
+
+        autoStartVideoInterval = setInterval(function () {
+            if (!thugAPI.reactStore.getState().meeting.currentUser.bVideoOn) {
+                turnOnVideo();
+            }
+        }, 10);
+
+    } else {
+        autoStartVideoButton.innerHTML = "Enable Auto Start Video"
+        clearInterval(autoStartVideoInterval);
     }
 });
 
