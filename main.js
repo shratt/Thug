@@ -15,6 +15,7 @@ let thugAPI = {
         }]);
         
         thugAPI.packets = Object.values(thugAPI.wpRequire.c).find(m => m.exports?.WS_CONF_RENAME_REQ).exports;
+        thugAPI.morePackets = Object.values(thugAPI.wpRequire.c).find(m => m.exports?.USER_NODE_AUDIO_STATUS_LIST).exports;
         Object.values(thugAPI.wpRequire.c).forEach(module => {
             if (!module?.exports) return;
             Object.values(module.exports).forEach(prop => {
@@ -39,6 +40,29 @@ function changeUsername (username) {
         }
     })();
 };
+
+function unmute () {
+    thugAPI.sendSocketMessage({
+        "evt": thugAPI.morePackets.USER_NODE_AUDIO_STATUS_LIST,
+        "body": {
+            "add": null,
+            "remove": null,
+            "update": [{
+                    "id": thugAPI.reactStore.getState().meeting.currentUser.userId,
+                    "muted": false
+                }]
+         }
+    })();
+    
+    thugAPI.sendSocketMessage({
+            "evt": thugAPI.packets.WS_AUDIO_MUTE_REQ,
+            "body": {
+                "id": thugAPI.reactStore.getState().meeting.currentUser.userId,
+                "bMute": false
+            }
+    })();
+};
+
 
 thugAPI.init();
 
@@ -118,9 +142,9 @@ let slider = addSlider("0", "1000", "100", function() {
     nameSpammerDelay = slider.value;
 })
 
-let button = addButton("start", () => {
-    if (button.innerHTML == "start") {
-        button.innerHTML = "stop"
+let nameSpammerButton = addButton("start", () => {
+    if (nameSpammerButton.innerHTML == "start") {
+        nameSpammerButton.innerHTML = "stop"
 
         if (nameSpammerInterval) {
             clearInterval(nameSpammerInterval);
@@ -131,11 +155,31 @@ let button = addButton("start", () => {
         }, parseInt(nameSpammerDelay));
 
     } else {
-        button.innerHTML = "start"
+        nameSpammerButton.innerHTML = "start"
 
         if (nameSpammerInterval) {
             clearInterval(nameSpammerInterval);
         }
+    }
+});
+
+menu.appendChild(document.createElement("hr"));
+
+let autoUnmuteInterval;
+
+let autoUnmuteButton = addButton("Enable Auto Unmute", () => {
+    if (autoUnmuteButton.innerHTML == "Enable Auto Unmute") {
+        autoUnmuteButton.innerHTML = "Disable Auto Unmute"
+
+        autoUnmuteInterval = setInterval(function () {
+            if (thugAPI.reactStore.getState().meeting.currentUser.muted) {
+                unmute();
+            }
+        }, 10);
+
+    } else {
+        autoUnmuteButton.innerHTML = "Enable Auto Unmute"
+        clearInterval(autoUnmuteInterval);
     }
 });
 
