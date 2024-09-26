@@ -15,6 +15,11 @@ function initializeMenu () {
         document.getElementById('delayValue').innerHTML = slider.value + "ms";
         nameSpammer.nameSpammerDelay = slider.value;
     })
+
+    UI.addButton("Impersonate Guests", () => {
+        window.namesList = [];
+        thugCore.state.attendeesList.attendeesList.forEach(attendee => window.namesList.push(attendee.displayName));
+    });
     
     let nameSpammerButton = UI.addButton("start", () => {
         if (nameSpammerButton.innerHTML == "start") {
@@ -25,7 +30,7 @@ function initializeMenu () {
             nameSpammer.stop();
         }
     });
-    
+
     UI.menu.appendChild(document.createElement("hr"));
     
     let autoUnmuteButton = UI.addButton("Enable Auto Unmute", () => {
