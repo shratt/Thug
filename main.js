@@ -40,11 +40,55 @@ function changeUsername (username) {
     })();
 };
 
-thugAPI.onInit = function () {
-    let delay = 10;
-    setInterval(() => {
-        changeUsername(Math.random().toString(36).substring(2,7))
-    }, delay);
-}
-
 thugAPI.init();
+
+let nameSpammerDelay = 100;
+let nameSpammerInterval = null;
+
+let menu = document.createElement('div');
+menu.style.position = 'fixed';
+menu.style.top = "0%";
+menu.style.right = "0%";
+menu.style.zIndex = '99999';
+menu.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+menu.style.color = "white";
+menu.style.backdropFilter = 'blur(4px)';
+menu.style.border = "1px solid rgba(255, 255, 255, 0.8)";
+menu.style.padding = '15px';
+menu.style.borderRadius = '4px';
+menu.style.width = '350px';
+
+menu.innerHTML = `
+    <h1 style="margin: 0;">Thug</h1>
+    <hr>
+    <h3 style="margin: 0;">Name Changer</h3>
+    <div style="margin: 10px 0;">
+        <label for="scale">Delay: <span id="delayValue">200</span> ms</label><br>
+        <input type="range" min="1" max="1000" value="200" class="slider" id="scale">
+        <button id="start" style="background-color: #ff5722; color: white; border: none; border-radius: 4px;">Apply</button>
+        <button id="stop" style="background-color: #ff5722; color: white; border: none; border-radius: 4px;">Stop</button>
+    </div>
+`
+
+document.body.appendChild(menu);
+
+document.getElementById('scale').addEventListener('input', (event) => {
+    const delayValue = document.getElementById('delayValue');
+    delayValue.textContent = event.target.value;
+    nameSpammerDelay = event.target.value;
+});
+
+document.getElementById('start').addEventListener("click", () => {
+    if (nameSpammerInterval) {
+        clearInterval(nameSpammerInterval);
+    }
+    nameSpammerInterval = setInterval(() => {
+        changeUsername(Math.random().toString(36).substring(2,7))
+    }, nameSpammerDelay);
+});
+
+document.getElementById('stop').addEventListener("click", () => {
+    if (nameSpammerInterval) {
+        clearInterval(nameSpammerInterval);
+    }
+});
