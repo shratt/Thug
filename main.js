@@ -100,7 +100,7 @@ menu.style.boxShadow = "0 8px 24px #0000004d";
 menu.style.padding = '15px';
 menu.style.borderRadius = '0px 0px 0px 8px';
 menu.style.width = '350px';
-menu.style.height = "40%";
+menu.style.height = "55%";
 
 menu.innerHTML = `
     <h1 style="font-size: 35px; font-weight: bold; margin: 0;">Thuggary <span style="font-size: 15px;">v0.1</span> </h1>
@@ -115,7 +115,7 @@ function addButton (name, callback) {
     button.style.marginTop = "5px";
     button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
     button.style.width = "100%";
-    button.style.height = "10%";
+    button.style.height = "8%";
     button.style.color = 'white';
     button.style.border = 'none';
     button.style.borderRadius = '5px';
@@ -219,10 +219,36 @@ let autoStartVideoButton = addButton("Enable Auto Start Video", () => {
     }
 });
 
+function botMeeting (amount) {
+    localStorage.clear();
+    window.meetingURL = window.meetingURL || document.querySelector("#webclient").src;
+    document.getElementById("root").innerHTML = "";
+    
+    let offset = 0;
+    
+    for (let i = 0; i < amount; i++) {
+        let menu = document.createElement('iframe');
+        menu.width = "250"
+        menu.src = meetingURL;
+        document.getElementById("root").appendChild(menu);
+    
+        offset += menu.width;
+    
+        let scope = menu.contentWindow;  
+        (scope.webpackChunkwebclient = scope.webpackChunkwebclient || []).push([[Symbol()], {}, function (require) {
+            require(22665).$c.webClient_meetingUqiueId = Math.random().toString(36).substring(2,7); // bypass zoom checking UID
+        }])
+    }
+}
+
 addButton("Bypass Kick", () => {
     localStorage.clear();
     sessionStorage.clear();
     thugAPI.frame.location.reload();
+});
+
+addButton("Bot Meeting", () => {
+    botMeeting(prompt("how many bots?"))
 });
 
 document.body.appendChild(menu);
