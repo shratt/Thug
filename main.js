@@ -42,7 +42,7 @@ function changeUsername (username) {
 
 thugAPI.init();
 
-let nameSpammerDelay = 100;
+let nameSpammerDelay = "100";
 let nameSpammerInterval = null;
 
 let menu = document.createElement('div');
@@ -62,7 +62,7 @@ menu.style.height = "40%";
 menu.innerHTML = `
     <h1 style="font-size: 35px; font-weight: bold; margin: 0;">Thuggary <span style="font-size: 15px;">v0.1</span> </h1>
     <hr>
-    <h3 style="margin: 10;">Name Spammer <span style="font-size: 15px;" id="delayValue">200ms</span></h3>
+    <h3 style="margin: 10;">Name Spammer <span style="font-size: 15px;" id="delayValue">100ms</span></h3>
 `;
 
 function addButton (name, callback) {
@@ -113,14 +113,14 @@ function addSlider (min, max, value, callback) {
     return sliderInput;
 }
 
-addSlider("0", "1000", "100", function() {
-    document.getElementById('delayValue').innerHTML = this.value + "ms";
-    nameSpammerDelay = this.value;
+let slider = addSlider("0", "1000", "100", function() {
+    document.getElementById('delayValue').innerHTML = slider.value + "ms";
+    nameSpammerDelay = slider.value;
 })
 
-addButton("start", () => {
-    if (this.innerHTML == "start") {
-        this.innerHTML = "stop"
+let button = addButton("start", () => {
+    if (button.innerHTML == "start") {
+        button.innerHTML = "stop"
 
         if (nameSpammerInterval) {
             clearInterval(nameSpammerInterval);
@@ -131,7 +131,7 @@ addButton("start", () => {
         }, parseInt(nameSpammerDelay));
 
     } else {
-        this.innerHTML = "start"
+        button.innerHTML = "start"
 
         if (nameSpammerInterval) {
             clearInterval(nameSpammerInterval);
@@ -140,3 +140,16 @@ addButton("start", () => {
 });
 
 document.body.appendChild(menu);
+
+let keyListener = (event) => {
+    if (event.code === 'ShiftRight') {
+        if (menu.style.display == "block") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "block";
+        }
+    }
+};
+
+window.addEventListener('keydown', keyListener);
+thugAPI.frame.addEventListener('keydown', keyListener);
