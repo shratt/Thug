@@ -63,6 +63,23 @@ function unmute () {
     })();
 };
 
+function raiseAndLowerHand () {
+    thugAPI.sendSocketMessage({
+        "evt": thugAPI.packets.WS_CONF_RAISE_LOWER_HAND_REQ,
+        "body": {
+            "id": thugAPI.getState().meeting.currentUser.userId,
+            "bOn": true
+        }
+    })(()=>{});
+    thugAPI.sendSocketMessage({
+        "evt": thugAPI.packets.WS_CONF_RAISE_LOWER_HAND_REQ,
+        "body": {
+            "id": thugAPI.getState().meeting.currentUser.userId,
+            "bOn": false
+        }
+    })(()=>{});
+}
+
 function turnOnVideo () {
     thugAPI.sendSocketMessage({
         evt: thugAPI.packets.WS_VIDEO_MUTE_VIDEO_REQ,
@@ -216,6 +233,19 @@ let autoStartVideoButton = addButton("Enable Auto Start Video", () => {
     } else {
         autoStartVideoButton.innerHTML = "Enable Auto Start Video"
         clearInterval(autoStartVideoInterval);
+    }
+});
+
+let raiseHandInterval;
+let raiseHandButton = addButton("Enable Raise Hand Spam", () => {
+    if (raiseHandButton.innerHTML == "Enable Raise Hand Spam") {
+        raiseHandButton.innerHTML = "Disable Raise Hand Spam"
+
+        raiseHandInterval = setInterval(raiseAndLowerHand, 10);
+
+    } else {
+        raiseHandButton.innerHTML = "Enable Raise Hand Spam"
+        clearInterval(raiseHandInterval);
     }
 });
 
