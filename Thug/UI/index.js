@@ -1,20 +1,59 @@
+function dragElement(element, header) {
+    let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+    header.style.cursor = 'move';
+    header.onmousedown = dragMouseDown;
+
+    function dragMouseDown (e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+    };
+
+    function elementDrag(e) {
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+        element.style.top = `${element.offsetTop - pos2}px`;
+        element.style.left = `${element.offsetLeft - pos1}px`;
+    }
+
+    function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+    }
+}
+
 let menu = document.createElement('div');
+menu.id = "UTC-Menu";
 menu.style.position = 'fixed';
-menu.style.top = "0%";
-menu.style.right = "0%";
+menu.style.top = "100px"; // Starting position
+menu.style.left = "100px"; // Starting position
 menu.style.zIndex = '99999';
 menu.style.backgroundColor = 'rgba(36, 36, 36, 0.9)';
 menu.style.color = "white";
 menu.style.backdropFilter = 'blur(4px)';
 menu.style.boxShadow = "0 8px 24px #0000004d";
 menu.style.padding = '15px';
-menu.style.borderRadius = '0px 0px 0px 8px';
+menu.style.borderRadius = '8px';
 menu.style.width = '350px';
 menu.style.height = "55%";
 
+let header = document.createElement("h1");
+header.id = "UTC-Header";
+header.innerText = `UTC ThugBomber`;
+header.style.cssText = "font-size: 35px; font-weight: bold; margin: 0; ";
+
+menu.append(header);
 document.body.appendChild(menu);
 
-function addButton (name, callback) {
+function addButton(name, callback) {
     let button = document.createElement('button');
     button.innerHTML = name;
     button.style.padding = '2px 15px';
@@ -28,21 +67,27 @@ function addButton (name, callback) {
     button.style.cursor = 'pointer';
     button.style.fontSize = '14px';
     button.style.transition = 'background-color 0.3s, transform 0.3s';
+    
     button.addEventListener('mouseover', () => {
         button.style.backgroundColor = 'rgba(75, 75, 75, 1)';
     });
+    
     button.addEventListener('mouseout', () => {
         button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
     });
+    
     button.addEventListener('click', function () {
-        thugCore.check();
+        if (typeof thugCore !== 'undefined') {
+            thugCore.check();
+        }
         callback();
     });
+    
     menu.appendChild(button);
     return button;
 }
 
-function addSlider (min, max, value, callback) {
+function addSlider(min, max, value, callback) {
     let sliderInput = document.createElement('input');
     sliderInput.type = 'range';
     sliderInput.min = min;
@@ -62,11 +107,13 @@ function addSlider (min, max, value, callback) {
     menu.appendChild(sliderInput);
 
     sliderInput.addEventListener('input', function () {
-        thugCore.check();
+        if (typeof thugCore !== 'undefined') {
+            thugCore.check();
+        }
         callback();
     });
     
     return sliderInput;
 }
 
-export default { menu, addButton, addSlider };
+export default { menu, addButton, addSlider, header, dragElement };

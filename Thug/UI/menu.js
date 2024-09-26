@@ -7,11 +7,8 @@ import reactionSpammer from "../Mods/reactionSpammer";
 import UI from "./index"
 
 function initializeMenu () {
-    UI.menu.innerHTML = `
-        <h1 style="font-size: 35px; font-weight: bold; margin: 0;">Thuggary <span style="font-size: 15px;">v0.1</span> </h1>
-        <hr>
-        <h3 style="margin: 10;">Name Spammer <span style="font-size: 15px;" id="delayValue">100ms</span></h3>
-    `
+    UI.menu.innerHTML += `<hr>
+        <h3 style="margin: 10;">Name Spammer <span style="font-size: 15px;" id="delayValue">100ms</span></h3>`
     
     let slider = UI.addSlider("0", "1000", "100", function() {
         document.getElementById('delayValue').innerHTML = slider.value + "ms";
@@ -76,6 +73,21 @@ function initializeMenu () {
     
     
     UI.menu.appendChild(document.createElement("hr"));
+
+    let keyListener = (event) => {
+        if (event.code === 'ShiftRight') {
+            if (UI.menu.style.display == "block") {
+                UI.menu.style.display = "none";
+            } else {
+                UI.menu.style.display = "block";
+            }
+        }
+    };
+
+    window.addEventListener('keydown', keyListener);
+    thugCore.frame.addEventListener('keydown', keyListener);
+
+    UI.dragElement(document.getElementById(UI.menu.id), document.getElementById(UI.header.id));
 }
 
 export default initializeMenu;
