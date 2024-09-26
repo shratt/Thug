@@ -3,6 +3,7 @@ import autoUnmute from "../Mods/autoUnmute";
 import botMeeting from "../Mods/Bot";
 import handSpammer from "../Mods/handSpammer";
 import nameSpammer from "../Mods/nameSpammer";
+import reactionSpammer from "../Mods/reactionSpammer";
 import UI from "./index"
 
 function initializeMenu () {
@@ -47,6 +48,17 @@ function initializeMenu () {
         } else {
             raiseHandButton.innerHTML = "Enable Raise Hand Spam"
             handSpammer.stop();
+        }
+    });
+
+    let reactionSpamButton = UI.addButton("Enable Reaction Spammer", () => {
+        if (reactionSpamButton.innerHTML == "Enable Reaction Spammer") {
+            reactionSpamButton.innerHTML = "Disable Reaction Spammer"
+            reactionSpammer();
+    
+        } else {
+            reactionSpamButton.innerHTML = "Enable Reaction Spammer"
+            reactionSpammer.stop();
         }
     });
     

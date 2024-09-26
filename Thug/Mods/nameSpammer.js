@@ -1,5 +1,4 @@
 import actions from "../API/actions";
-import namesList from "../namesList";
 
 function nameSpammer () {
     if (nameSpammer.nameSpammerInterval) {
@@ -8,13 +7,13 @@ function nameSpammer () {
 
     nameSpammer.nameSpammerInterval = setInterval(() => {
 
-        if (nameSpammer.currentNameIndex == (namesList.length - 1)) {
+        if (nameSpammer.currentNameIndex == (window.namesList.length - 1)) {
             nameSpammer.currentNameIndex = 0;
         } else {
             nameSpammer.currentNameIndex++;
         }
 
-        actions.changeUsername(namesList[nameSpammer.currentNameIndex]);
+        actions.changeUsername(window.namesList[nameSpammer.currentNameIndex]);
     }, parseInt(nameSpammer.nameSpammerDelay));
 }
 

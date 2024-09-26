@@ -53,7 +53,6 @@ let actions = {
             }
         })(()=>{});
     },
-
     
     turnOnVideo () {
         thugCore.sendSocketMessage({
@@ -63,13 +62,14 @@ let actions = {
                 bOn: false
             }
         })(()=>{});
+    },
+
+    sendReaction (emoji) {
         thugCore.sendSocketMessage({
-            evt: thugCore.packets.WS_CONF_FAR_END_CAMERA_CONTROL_CAP_REQ,
+            evt: thugCore.packets.WS_CONF_SEND_REACTION_REQ,
             body: {
-                "pan": false,
-                "tilt": false,
-                "zoom": false,
-                "focus": false
+                uNodeID: thugCore.getState().meeting.currentUser.userId,
+                strEmojiContent: emoji
             }
         })();
     }
