@@ -219,6 +219,12 @@ let autoStartVideoButton = addButton("Enable Auto Start Video", () => {
     }
 });
 
+addButton("Bypass Kick", () => {
+    localStorage.clear();
+    sessionStorage.clear();
+    thugAPI.frame.location.reload();
+});
+
 document.body.appendChild(menu);
 
 let keyListener = (event) => {
