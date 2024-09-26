@@ -3,13 +3,11 @@ import actions from "../API/actions";
 function botMeeting (amount) {
     localStorage.clear();
     window.meetingURL = window.meetingURL || document.querySelector("#webclient").src;
+    document.getElementById("root").innerHTML = "";
     
     for (let i = 0; i < amount; i++) {
         let menu = document.createElement('iframe');
-        menu.id = "webclient";
-        menu.width = "100%"
-        menu.height = "0%"
-        menu.style.display = "none"
+        menu.width = "250"
         menu.src = meetingURL;
         document.getElementById("root").appendChild(menu);
 

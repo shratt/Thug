@@ -3,7 +3,7 @@ import actions from "../API/actions";
 
 function autoUnmute () {
     autoUnmute.autoUnmuteInterval = setInterval(function () {
-        if (thugCore.getState().meeting.currentUser.muted) {
+        if (thugCore.state.meeting.currentUser.muted) {
             actions.unmute();
         }
     }, 10);

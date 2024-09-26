@@ -1,6 +1,7 @@
 import thugCore from "../API";
 import autoUnmute from "../Mods/autoUnmute";
 import botMeeting from "../Mods/Bot";
+import chatSpammer from "../Mods/chatSpammer";
 import handSpammer from "../Mods/handSpammer";
 import nameSpammer from "../Mods/nameSpammer";
 import reactionSpammer from "../Mods/reactionSpammer";
@@ -45,6 +46,17 @@ function initializeMenu () {
         } else {
             raiseHandButton.innerHTML = "Enable Raise Hand Spam"
             handSpammer.stop();
+        }
+    });
+
+    let chatSpamButton = UI.addButton("Enable Chat Spammer", () => {
+        if (chatSpamButton.innerHTML == "Enable Chat Spammer") {
+            chatSpamButton.innerHTML = "Disable Chat Spammer"
+            chatSpammer(prompt("what do you want to spam?"));
+    
+        } else {
+            chatSpamButton.innerHTML = "Enable Chat Spammer"
+            chatSpammer.stop();
         }
     });
 

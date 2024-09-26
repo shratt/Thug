@@ -5,9 +5,14 @@ window.thugCore = {
     get frame() { 
         return document.getElementById("webclient")?.contentWindow || window
     },
+    get store() { 
+        return Object.values(thugCore.frame.document.querySelector("#root"))[0].memoizedState.element.props.store;
+    },
+    get state() { 
+        return thugCore.store.getState();
+    },
     "init": function () {
         if (thugCore.frame.document.querySelector("#root")) {
-            thugCore.getState = () => Object.values(thugCore.frame.document.querySelector("#root"))[0].memoizedState.element.props.store.getState();
             thugCore.frame.webpackChunkwebclient.push([[Symbol()], {}, function (require) {
                 thugCore.frame.Object.prototype.__defineGetter__(Symbol.for("cache"), function() {
                     require.c = this;

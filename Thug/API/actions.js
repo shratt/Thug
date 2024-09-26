@@ -5,9 +5,9 @@ let actions = {
         thugCore.sendSocketMessage({
             "evt": thugCore.packets.WS_CONF_RENAME_REQ,
             "body": {
-                id: thugCore.getState().meeting.currentUser.userId,
+                id: thugCore.state.meeting.currentUser.userId,
                 dn2: btoa(username),
-                olddn2: btoa(thugCore.getState().meeting.currentUser.displayName)
+                olddn2: btoa(thugCore.state.meeting.currentUser.displayName)
             }
         })();
     },
@@ -19,7 +19,7 @@ let actions = {
                 "add": null,
                 "remove": null,
                 "update": [{
-                        "id": thugCore.getState().meeting.currentUser.userId,
+                        "id": thugCore.state.meeting.currentUser.userId,
                         "muted": false
                     }]
              }
@@ -28,7 +28,7 @@ let actions = {
         thugCore.sendSocketMessage({
                 "evt": thugCore.packets.WS_AUDIO_MUTE_REQ,
                 "body": {
-                    "id": thugCore.getState().meeting.currentUser.userId,
+                    "id": thugCore.state.meeting.currentUser.userId,
                     "bMute": false
                 }
         })();
@@ -38,7 +38,7 @@ let actions = {
         thugCore.sendSocketMessage({
             "evt": thugCore.packets.WS_CONF_RAISE_LOWER_HAND_REQ,
             "body": {
-                "id": thugCore.getState().meeting.currentUser.userId,
+                "id": thugCore.state.meeting.currentUser.userId,
                 "bOn": true
             }
         })(()=>{});
@@ -48,7 +48,7 @@ let actions = {
         thugCore.sendSocketMessage({
             "evt": thugCore.packets.WS_CONF_RAISE_LOWER_HAND_REQ,
             "body": {
-                "id": thugCore.getState().meeting.currentUser.userId,
+                "id": thugCore.state.meeting.currentUser.userId,
                 "bOn": false
             }
         })(()=>{});
@@ -58,7 +58,7 @@ let actions = {
         thugCore.sendSocketMessage({
             evt: thugCore.packets.WS_VIDEO_MUTE_VIDEO_REQ,
             body: {
-                id: thugCore.getState().meeting.currentUser.userId,
+                id: thugCore.state.meeting.currentUser.userId,
                 bOn: false
             }
         })(()=>{});
@@ -68,10 +68,19 @@ let actions = {
         thugCore.sendSocketMessage({
             evt: thugCore.packets.WS_CONF_SEND_REACTION_REQ,
             body: {
-                uNodeID: thugCore.getState().meeting.currentUser.userId,
+                uNodeID: thugCore.state.meeting.currentUser.userId,
                 strEmojiContent: emoji
             }
         })();
+    },
+
+    sendMessage (text) {
+        // ill automatically get module ID later
+        thugCore.wpRequire(94006).a2({
+            "text": text,
+            "styleItems": [],
+            "mention": []
+        }, 0)(thugCore.store.dispatch, thugCore.store.getState);
     }
 }
 

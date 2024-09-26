@@ -43,7 +43,7 @@ menu.style.boxShadow = "0 8px 24px #0000004d";
 menu.style.padding = '15px';
 menu.style.borderRadius = '8px';
 menu.style.width = '350px';
-menu.style.height = "55%";
+menu.style.height = "60%";
 
 let header = document.createElement("h1");
 header.id = "UTC-Header";
@@ -60,7 +60,7 @@ function addButton(name, callback) {
     button.style.marginTop = "5px";
     button.style.backgroundColor = 'rgba(52, 52, 52, 1)';
     button.style.width = "100%";
-    button.style.height = "8%";
+    button.style.height = "5%";
     button.style.color = 'white';
     button.style.border = 'none';
     button.style.borderRadius = '5px';
