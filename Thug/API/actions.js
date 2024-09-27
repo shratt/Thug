@@ -76,7 +76,7 @@ let actions = {
 
     sendMessage (text) {
         // ill automatically get module ID later
-        thugCore.wpRequire(94006).a2({
+        thugCore.sendChatPacket({
             "text": text,
             "styleItems": [],
             "mention": []

@@ -34,6 +34,19 @@ window.thugCore = {
                 });
             });
 
+            Object.values(thugCore.wpRequire.c).forEach(function (module) {
+                if (!module?.exports) return;
+                Object.values(module.exports).forEach(function (prop) {
+                    if (typeof prop == "function") {
+                        let fnString = prop.toString();
+                        if (fnString.includes("{meeting:{currentUser:") && fnString.includes("localXmppMsgId")) {
+                            thugCore.sendChatPacket = prop;
+                            return;
+                        }
+                    }
+                })
+            })
+
             thugCore.initialized = true;
             thugCore.onInit();
         }
