@@ -1,8 +1,13 @@
 function dragElement(element, header) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-    header.style.cursor = 'move';
-    header.onmousedown = dragMouseDown;
+    if (header) {
+        header.style.cursor = 'move';
+        header.onmousedown = dragMouseDown;
+    } else {
+        element.style.cursor = 'move';
+        element.onmousedown = dragMouseDown;
+    }
 
     function dragMouseDown (e) {
         e.preventDefault();
