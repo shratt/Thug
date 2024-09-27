@@ -92,7 +92,17 @@ function initializeMenu () {
     UI.addButton("Bot Meeting", () => {
         botMeeting(prompt("how many bots?"));
     });
-    
+
+
+    let thugBombButton = UI.addButton("Start Recording", () => {
+        if (thugBombButton.innerHTML === "Start Recording") {
+            thugBombButton.innerHTML = "Stop Recording";
+            thugbomb(); // Start the thugbomb function
+        } else {
+            thugBombButton.innerHTML = "Start Recording";
+            thugbomb.stop(); // Stop the thugbomb function
+        }
+    });    
     
     UI.menu.appendChild(document.createElement("hr"));
 
