@@ -3,11 +3,12 @@ import actions from "../API/actions";
 function botMeeting (amount) {
     localStorage.clear();
     window.meetingURL = window.meetingURL || document.querySelector("#webclient").src;
-    document.getElementById("root").innerHTML = "";
+
+    let botWindow = window.open("about:blank", "bot panel", "width=500,height=400,left=100,top=100")
     
     let container = document.createElement("div");
     container.style.display = "column wrap";
-    document.getElementById("root").appendChild(container);
+    botWindow.document.body.appendChild(container);
 
     for (let i = 0; i < amount; i++) {
         
