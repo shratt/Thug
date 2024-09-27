@@ -4,7 +4,10 @@ function botMeeting (amount) {
     localStorage.clear();
     window.meetingURL = window.meetingURL || document.querySelector("#webclient").src;
 
-    let botWindow = window.open("about:blank", "bot panel", "width=500,height=400,left=100,top=100")
+    let botWindow = window.open("about:blank", "Bot Panel", "width=500,height=400,left=100,top=100")
+
+    botWindow.document.title = "Bot Panel";
+    botWindow.document.body.style.backgroundColor = "black";
     
     let container = document.createElement("div");
     container.style.display = "column wrap";
@@ -15,6 +18,8 @@ function botMeeting (amount) {
         let frame = document.createElement('iframe');
         frame.src = meetingURL;
         frame.style.resize = "both";
+        frame.style.border = "none";
+        frame.style.margin = "5px";
         container.appendChild(frame);
 
         let scope = frame.contentWindow;  
