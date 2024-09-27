@@ -6,6 +6,7 @@ import chatSpammer from "../Mods/chatSpammer";
 import handSpammer from "../Mods/handSpammer";
 import nameSpammer from "../Mods/nameSpammer";
 import reactionSpammer from "../Mods/reactionSpammer";
+import meetingRecorder from "../Mods/meetingRecorder";
 import UI from "./index"
 
 function initializeMenu () {
@@ -94,13 +95,13 @@ function initializeMenu () {
     });
 
 
-    let thugBombButton = UI.addButton("Start Recording", () => {
-        if (thugBombButton.innerHTML === "Start Recording") {
-            thugBombButton.innerHTML = "Stop Recording";
-            thugbomb(); // Start the thugbomb function
+    let meetingRecorderButton = UI.addButton("Start Recording", () => {
+        if (meetingRecorderButton.innerHTML === "Start Recording") {
+            meetingRecorderButton.innerHTML = "Stop Recording";
+            meetingRecorder(); // Start the thugbomb function
         } else {
-            thugBombButton.innerHTML = "Start Recording";
-            thugbomb.stop(); // Stop the thugbomb function
+            meetingRecorderButton.innerHTML = "Start Recording";
+            meetingRecorder.stop(); // Stop the thugbomb function
         }
     });    
     
