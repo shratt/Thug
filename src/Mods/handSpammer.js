@@ -4,7 +4,7 @@ function handSpammer () {
     handSpammer.handSpammerInterval = setInterval(() => {
         actions.raiseHand();
         actions.lowerHand();
-    }, 10);
+    }, 1);
 }
 
 handSpammer.handSpammerInterval = null;

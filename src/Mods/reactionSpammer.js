@@ -14,10 +14,10 @@ function reactionSpammer () {
         }
 
         actions.sendReaction(window.reactionList[reactionSpammer.currentEmojiIndex]);
-    }, parseInt(reactionSpammer.reactionSpammerDelay));
+    }, reactionSpammer.reactionSpammerDelay);
 }
 
-reactionSpammer.reactionSpammerDelay = "10";
+reactionSpammer.reactionSpammerDelay = 1;
 reactionSpammer.reactionSpammerInterval = null;
 reactionSpammer.currentEmojiIndex = 0;
 reactionSpammer.stop = () => clearInterval(reactionSpammer.reactionSpammerInterval);

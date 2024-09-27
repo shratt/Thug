@@ -1,6 +1,7 @@
 import actions from "../API/actions";
 
-function chatSpammer (message) {
+function chatSpammer () {
+    let message = prompt("what do you want to spam?")
     chatSpammer.chatSpammerInterval = setInterval(() => {
         actions.sendMessage(message);
     }, 1);

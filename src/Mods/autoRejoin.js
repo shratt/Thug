@@ -1,10 +1,12 @@
+import core from "../API";
+
 function autoRejoin () {
     autoRejoin.autoRejoinInterval = setInterval(function () {
-        if (thugCore.frame.document.getElementsByClassName("zm-btn zm-btn-legacy zm-btn--primary")?.[0]?.innerText == "Exit") {
+        if (core.frame.document.getElementsByClassName("zm-btn zm-btn-legacy zm-btn--primary")?.[0]?.innerText == "Exit") {
             localStorage.clear();
             sessionStorage.clear();
-            thugCore.frame.location.reload();
-            thugCore.initialized = false;
+            core.frame.location.reload();
+            core.initialized = false;
         }
     }, 1000);
 }

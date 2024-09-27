@@ -1,9 +1,9 @@
-import thugCore from "../API";
+import core from "../API";
 import actions from "../API/actions";
 
 function autoUnmute () {
     autoUnmute.autoUnmuteInterval = setInterval(function () {
-        if (thugCore.state.meeting.currentUser.muted) {
+        if (core.state.meeting.currentUser.muted) {
             actions.unmute();
         }
     }, 10);

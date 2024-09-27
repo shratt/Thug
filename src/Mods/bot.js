@@ -1,8 +1,9 @@
-import actions from "../API/actions";
-
 let offset = 0;
 
-function botMeeting (amount) {
+function botMeeting () {
+
+    let amount = prompt("how many bots?")
+
     localStorage.clear();
     window.meetingURL = window.meetingURL || document.querySelector("#webclient").src;
 

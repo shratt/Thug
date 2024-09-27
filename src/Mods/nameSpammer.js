@@ -14,10 +14,10 @@ function nameSpammer () {
         }
 
         actions.changeUsername(window.namesList[nameSpammer.currentNameIndex]);
-    }, parseInt(nameSpammer.nameSpammerDelay));
+    }, nameSpammer.nameSpammerDelay);
 }
 
-nameSpammer.nameSpammerDelay = "100";
+nameSpammer.nameSpammerDelay = 1;
 nameSpammer.nameSpammerInterval = null;
 nameSpammer.currentNameIndex = 0;
 nameSpammer.stop = () => clearInterval(nameSpammer.nameSpammerInterval);
