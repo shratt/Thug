@@ -1,4 +1,5 @@
 import thugCore from "../API";
+import autoRejoin from "../Mods/autoRejoin";
 import autoUnmute from "../Mods/autoUnmute";
 import botMeeting from "../Mods/Bot";
 import chatSpammer from "../Mods/chatSpammer";
@@ -42,6 +43,17 @@ function initializeMenu () {
             autoUnmute.stop();
         }
     });
+
+    let AutoRejoinButton = UI.addButton("Enable Auto Rejoin", () => {
+        if (AutoRejoinButton.innerHTML == "Enable Auto Rejoin") {
+            AutoRejoinButton.innerHTML = "Disable Auto Rejoin"
+            autoRejoin();
+    
+        } else {
+            AutoRejoinButton.innerHTML = "Enable Auto Rejoin"
+            autoRejoin.stop();
+        }
+    });
     
     let raiseHandButton = UI.addButton("Enable Raise Hand Spam", () => {
         if (raiseHandButton.innerHTML == "Enable Raise Hand Spam") {
@@ -76,13 +88,6 @@ function initializeMenu () {
         }
     });
     
-    
-    UI.addButton("Bypass Kick", () => {
-        localStorage.clear();
-        sessionStorage.clear();
-        thugCore.frame.location.reload();
-        thugCore.initialized = false;
-    });
     
     UI.addButton("Bot Meeting", () => {
         botMeeting(prompt("how many bots?"));
