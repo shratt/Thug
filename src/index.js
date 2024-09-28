@@ -24,5 +24,5 @@ Menu.addButton(menu, 'Chat Spammer', true, chatSpammer, chatSpammer.stop);
 Menu.addButton(menu, 'Reaction Spammer', true, reactionSpammer, reactionSpammer.stop);
 
 Menu.addButton(menu, 'Auto Unmute', true, autoUnmute, autoUnmute.stop);
-Menu.addButton(menu, 'Auto Rejoin', true, autoRejoin, autoRejoin.stop);
+Menu.addButton(menu, 'antiKick', true, autoRejoin, autoRejoin.stop);
 Menu.addButton(menu, 'Bot Meeting', false, botMeeting);
