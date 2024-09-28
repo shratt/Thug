@@ -1,6 +1,6 @@
 let offset = 0;
 
-function botMeeting () {
+function botMeeting (invisible = false) {
 
     let amount = prompt("how many bots?")
 
@@ -22,9 +22,15 @@ function botMeeting () {
         
         let frame = document.createElement('iframe');
         frame.src = meetingURL;
-        frame.style.resize = "both";
-        frame.style.border = "none";
-        frame.style.margin = "5px";
+        if (!invisible) {
+            frame.style.resize = "both";
+            frame.style.border = "none";
+            frame.style.margin = "5px";
+        } else {
+            frame.style.width = "0%";
+            frame.style.height = "0%";
+            frame.style.display = "none";
+        }
         container.appendChild(frame);
 
         let scope = frame.contentWindow;  

@@ -63,7 +63,15 @@ let core = {
             }]);
         }
         return this._wpRequire;
+    },
+
+    recache () {
+        this._wpRequire = null;
+        this._sendSocketMessage = null;
+        this._sendChatPacket = null;
     }
 };
+
+window.core = core;
 
 export default core;

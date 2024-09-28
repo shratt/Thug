@@ -26,3 +26,4 @@ Menu.addButton(menu, 'Reaction Spammer', true, reactionSpammer, reactionSpammer.
 Menu.addButton(menu, 'Auto Unmute', true, autoUnmute, autoUnmute.stop);
 Menu.addButton(menu, 'antiKick', true, autoRejoin, autoRejoin.stop);
 Menu.addButton(menu, 'Bot Meeting', false, botMeeting);
+Menu.addButton(menu, 'Bot Meeting (background)', false, botMeeting.bind(botMeeting, [true]));

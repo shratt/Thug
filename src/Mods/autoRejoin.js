@@ -8,16 +8,12 @@ function autoRejoin() {
 
     autoRejoin.autoRejoinInterval = setInterval(function() {
         if (core.frame.document.getElementsByClassName("zm-btn zm-btn-legacy zm-btn--primary")?.[0]?.innerText == "Exit" || document.getElementsByClassName("zm-btn zm-btn-legacy zm-btn--primary zm-btn__outline--blue")?.[0]?.innerText === "Leave") {
-            core._wpRequire = null // dude who the fuck forgot this :sob:
-            core._sendSocketMessage = null
-            core._sendChatPacket = null
 
             localStorage.clear();
             sessionStorage.clear();
             core.frame.location.reload();
-            core.initialized = false;
-            // rehook webpack
-            (() => {})(core._wpRequire, core._sendSocketMessage, core._sendChatPacket)
+            core.recache();
+
             // reset modules
             document.querySelectorAll('button').forEach(button => {
                 const style = window.getComputedStyle(button);
