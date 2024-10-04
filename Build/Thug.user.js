@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Thug
+// @name         Thugware
 // @namespace    http://tampermonkey.net/
 // @version      v69
 // @description  rape zoom
